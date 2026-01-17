@@ -670,7 +670,7 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
 
 ## Meterpreter:
 
-- Metasploit payload basically a post-exploitation tool after obtaining a meterpreter shell of the target machine
+-  a Metasploit payload which is basically a post-exploitation tool after obtaining a meterpreter shell of the target machine
  
 - runs in the memory of the target machine so it is hard to be detected during antivirus scans.
  
