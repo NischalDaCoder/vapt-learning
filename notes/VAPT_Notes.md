@@ -186,10 +186,10 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
 		$ username UNION SELECT 1,2,3;-- (finding the path to the actual column)
   
 		$ username UNION SELECT 1,2,3 where database() like '%';-- (enumeration of the database)
-			--cycle all the keys on the keyboars in the "like" operator such as 'a%' then another time 'b%' until the string matches the first letter of the database name. After finding the first letter do it until we find the database full 			name.
+			-> cycle all the keys on the keyboars in the "like" operator such as 'a%' then another time 'b%' until the string matches the first letter of the database name. After finding the first letter do it until we find the database full 			name.
   
 		$ username UNION SELECT 1,2,3 FROM information_schema.tables WHERE table_schema = 'something' and table_name like 'a%';--  (enumeration of table name)
-			-- using infromation_schema database to find the table name just like we found the databse name using "like" operator.
+			-> using infromation_schema database to find the table name just like we found the databse name using "like" operator.
   
 		$ admin123' UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='something' and TABLE_NAME='something' and COLUMN_NAME like 'a%'; (enumerating column name)
   
@@ -250,7 +250,7 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
 
 - TCP flags:
   
-    	-- TCP header = 24 bytes of a TCP segment
+    	- TCP header = 24 bytes of a TCP segment
   
     			-> First row (Source port number and Destination Port number) each allocating 16 bits (2 bytes)
   
@@ -258,7 +258,7 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
   
     			-> Total six rows. Each row contains 32 bit (4 bytes) so total 6 rows equals to 24 bytes
   
-    	-- TCP Header Flags:
+    	- TCP Header Flags:
   
         		-> URG : urgent flag first priority to be processed
   
@@ -302,7 +302,7 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
 		$ nmap -S SPOOFED_IP MACHINE_IP (spoofed ip)
   
 		$ nmap -D 10.10.0.1,10.10.0.2,RND,RND,ME MACHINE_IP (Decoy)
-    			-- 3rd and 4th is randomly generated while fifth is the attacker.
+    			-> 3rd and 4th is randomly generated while fifth is the attacker.
   
         	-> Advantages:  make the scan look like coming from multiple IPs so the attacker's IP would be lost.
 
@@ -356,21 +356,21 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
 
 - SMTP (Simple Mail Transfer Protocol) default port - 25
   
-    -- Components: Mail Submission Agent(MSA), Maile Transfer Agent(MTA), Mail Delivery Agent(MDA) and Mail User Agent (MUA)
+   	 - Components: Mail Submission Agent(MSA), Maile Transfer Agent(MTA), Mail Delivery Agent(MDA) and Mail User Agent (MUA)
   
-    -- MUA -> MSA -> MTA -> MDA -> MUA
+   	 - MUA -> MSA -> MTA -> MDA -> MUA
   
-		$ telnet MACHINE_IP 25
+			$ telnet MACHINE_IP 25
   
-		$ helo telnet
+			$ helo telnet
   
-		$ mail from: <address>
+			$ mail from: <address>
   
-		$ rctp to: <addres>
+			$ rctp to: <addres>
   
-		data: something
+			data: something
   
-		$ quit
+			$ quit
 
 
 - POP3 (Post Office Protocol 3): used to download the email from MDA server. default port - 110
@@ -415,7 +415,7 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
   
     	-> here POP3 packets are being captured. -A means we want it in ASCII format
   
-  		- Solution: Adding an encryption layer on top of any network protocol. Particularly, Transport Layer Security (TLS).
+  		-> Solution: Adding an encryption layer on top of any network protocol. Particularly, Transport Layer Security (TLS).
     
 # Man-in-the-middle (MITM) attack:
 
