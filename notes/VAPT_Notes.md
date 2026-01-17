@@ -252,13 +252,14 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
   
     	-- TCP header = 24 bytes of a TCP segment
   
-    	-- First row (Source port number and Destination Port number) each allocating 16 bits (2 bytes)
+    			-> First row (Source port number and Destination Port number) each allocating 16 bits (2 bytes)
   
-    	-- Second row Sequence number and third row Acknowledgement Number
+    			-> Second row Sequence number and third row Acknowledgement Number
   
-    	-- Total six rows. Each row contains 32 bit (4 bytes) so total 6 rows equals to 24 bytes
+    			-> Total six rows. Each row contains 32 bit (4 bytes) so total 6 rows equals to 24 bytes
   
     	-- TCP Header Flags:
+  
         		-> URG : urgent flag first priority to be processed
   
         		-> ACK: acknowledge the receipt of a TCP segment
