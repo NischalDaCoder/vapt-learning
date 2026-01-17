@@ -24,7 +24,6 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
   - Column Enumeration
   - Database Enumeration
   - Table Enumeration
-  - Column Enumeration
   - Username & Password Enumeration
 - Time-Based Blind SQLi
 
@@ -142,13 +141,11 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
   
 		/etc/shadow
   
-		/rott/.bash_history
+		/root/.bash_history
   
 		/var/log/dmessage
   
 		/var/mail/root
-  
-		/root/.ssh/id_rsa (has history commands for root user)
   
 		/var/log/dmessage (has global system messages)
   
