@@ -12,18 +12,6 @@ The content here is based on hands-on practice, labs, and self-study. It is main
   - `VAPT_Notes.md` 
     Complete learning notes including payloads, commands, and explanations.
 
-- `wordlists/` 
-  Wordlists used during practice (bruteforce, fuzzing, etc.).
-
-- `tools/` 
-  Notes or references related to tools such as Nmap, Burp Suite, Hydra, Socat, etc.
-
-- `labs/` 
-  Notes from platforms like TryHackMe, Hack The Box, or custom labs.
-
-- `scripts/`  
-  Custom scripts written during learning (optional / future use).
-
 ---
 
 ## Topics Covered
