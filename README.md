@@ -30,6 +30,7 @@ The content here is based on hands-on practice, labs, and self-study. It is main
 - Reverse and Bind Shells
 - MSFVenom
 - Web Shells
+- Linux Privilege Escalation
 
 ---
 
