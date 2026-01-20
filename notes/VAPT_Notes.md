@@ -604,7 +604,7 @@ Without this, XSS and SQLi won’t fully click.
 	
 	$ "><script>alert('sup');</script> (escaping input tag)
 	
-	$ </textarea><script>alert('yoh');</script> (escaping textarea)
+	$ </textarea><script>alert('yoh');</script> (escaping textarea) 
 	
 	$ <sscriptcript>alert('THM');</sscriptcript> (bypassing filters)
 	
