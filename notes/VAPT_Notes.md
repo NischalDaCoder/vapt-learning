@@ -135,7 +135,7 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
   - MsfVenom
   - Multi/Handler
 
-### Linux Privilege Escalation
+### PHASE 7: Linux Privilege Escalation
 - Enumeration
 - Privilege Escaltion: Kernel Exploits
 - Privilege Escalation: Sudo
@@ -145,7 +145,7 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
 - Privilege Escalation: PATH
 - Privilege Escalation: NFS
 
-### Windows Privilege Escalation
+### PHASE 8: Windows Privilege Escalation
 - Harvesting Password from usual spot
 - Other Quick Wins
 - Abusing Service Misconfigurations
