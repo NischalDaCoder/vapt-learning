@@ -5,6 +5,18 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
 
 ## Contents Overview
 
+### 0. FUNDAMENTALS
+- What cybersecurity actually means
+- CIA triad
+- VAPT basics
+- Threat, vulnerability, risk
+- Ethics and legal scope
+- Attacker mindset
+- Linux basics for pentesting
+- Windows basics
+- Networking basics
+- Web basics
+
 ### 1. File Inclusion
 - Path Traversal
 - Common OS File Locations (Linux & Windows)
@@ -135,6 +147,127 @@ This repository documents my hands-on learning and notes in Vulnerability Assess
   
 
 ---
+
+# FUNDAMENTALS 
+
+## What is Cybersecurity
+
+Cybersecurity is about protecting systems, networks, and data from attacks. That’s it.  
+Attackers usually want to do one of three things: steal data, change data, or stop services from working.
+
+As a pentester, my job is to think like an attacker and find where things can break.
+
+## CIA Triad
+
+This is the base of everything:
+
+- Confidentiality: data should not be seen by random people
+  
+- Integrity: data should not be modified without permission
+  
+- Availability: systems should be up and usable
+
+Almost every attack breaks at least one of these.
+
+## VAPT Basics
+
+- Vulnerability Assessment is about finding weaknesses.
+  
+- Penetration Testing is about exploiting those weaknesses.
+
+VA tells *what is wrong*.  
+PT shows *how bad it can get*.
+
+## Threat, Vulnerability, Risk
+
+- Threat: something that can cause harm (attacker, malware, misconfig)
+  
+- Vulnerability: a weakness in the system
+  
+- Risk: when a threat can actually exploit a vulnerability and cause damage
+
+A vulnerability alone is not always dangerous unless it can be abused.
+
+## Ethics and Legal Scope
+
+Pentesting is only legal when you have permission.  
+
+No permission = illegal.
+
+Always follow scope and rules of engagement. Don’t test random systems.
+
+## Attacker Mindset
+
+Always think like this:
+
+- What is exposed?
+  
+- What can I access?
+  
+- What is misconfigured?
+  
+- Can small issues be chained together?
+
+Big hacks usually start from small mistakes.
+
+## Linux Basics
+
+Most pentesting tools run on Linux.  
+
+Important things to know:
+- File system like /etc, /var, /tmp
+  
+- Permissions (rwx, sudo, root)
+  
+- Processes and services
+
+If Linux basics are weak, exploitation becomes painful.
+
+## Windows Basics
+
+Windows is very common in real environments.
+Things that matter:
+
+- Users and groups
+  
+- Services
+  
+- Registry
+  
+- PowerShell basics
+
+Many privilege escalation paths exist because of bad Windows configs.
+
+## Networking Basics
+
+Before attacking networks, understand them:
+
+- IP addresses
+  
+- Ports
+  
+- Services
+  
+- TCP vs UDP
+  
+- DNS
+
+Most attacks start by scanning ports and services.
+
+## Web Basics
+
+Web vulnerabilities only make sense if web basics are clear:
+
+- HTTP request and response
+  
+- GET and POST
+  
+- Cookies and sessions
+  
+- Authentication vs authorization
+
+Without this, XSS and SQLi won’t fully click.
+
 
 # FILE INCLUSION:
 
